@@ -1,0 +1,347 @@
+:root {
+    --frame-color-1: #ff0000;
+    --frame-color-2: #1a0000;
+    --frame-color-3: #ff0000;
+
+    --heading-line: #9b494966;
+
+    --link-color: #ff3333;
+    --link-color-visited: rgb(255, 61, 61);
+    --accent-color: #9b4949;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    margin: 0;
+    font-family: "JetBrains Mono", monospace;
+    font-weight: 400;
+
+    background-color: #0e0a07;
+    color: #e8e6e3;
+
+    user-select: none;
+    visibility: hidden;
+
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    background-color: transparent;
+    min-height: 100vh;
+}
+
+.video-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+    /* filter: blur(1rem); */
+}
+
+video {  
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;  
+    height: auto;  
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: -1;
+    transform: translateZ(0) translate(-50%, -50%);
+    will-change: auto;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 0;
+}
+
+@property --gradient-angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+
+@keyframes rotation {
+    0%   { --gradient-angle: 0deg; }
+    100% { --gradient-angle: 360deg; }
+}
+
+.white-frame {
+    --frame-color-1: #ffffff;
+    --frame-color-2: #1a1a1a;
+    --frame-color-3: #ffffff;
+
+    --heading-line: #70707066;
+
+    --link-color: #ececec;
+    --link-color-visited: rgb(216, 216, 216);
+    --accent-color: #e4e4e4;
+}
+
+.gold-frame {
+    --frame-color-1: #e6e314;
+    --frame-color-2: #241813;
+    --frame-color-3: #e6a414;
+
+    --heading-line: #a8994166;
+
+    --link-color: #e9d94c;
+    --link-color-visited: rgb(155, 124, 37);
+    --accent-color: #9b8549;
+}
+
+.purple-frame {
+    --frame-color-1: #e614e6;
+    --frame-color-2: #231324;
+    --frame-color-3: #9914e6;
+
+    --heading-line: #9f41a866;
+
+    --link-color: #b74ce9;
+    --link-color-visited: rgb(118, 37, 155);
+    --accent-color: #8d499b;
+}
+
+
+
+.content-wrapper {
+    padding: 8vh 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    z-index: 1;
+    width: 100%;
+}
+
+.content {
+    background-color: #000000;
+    text-align: center;
+    position: relative;
+
+    width: 80%;
+    max-width: 800px;
+    padding: 50px 60px;
+    border-radius: 12px;
+}
+
+.content::before,
+.content::after {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    z-index: -1;
+    background: conic-gradient(
+        from var(--gradient-angle),
+        var(--frame-color-1),
+        var(--frame-color-2),
+        var(--frame-color-3),
+        var(--frame-color-2),
+        var(--frame-color-1)
+    );
+    border-radius: inherit;
+    animation: rotation 30s linear infinite;
+}
+
+.content::after {
+    filter: blur(3.5rem);
+}
+
+.studio-logo {
+    width: 100%;
+    max-width: 250px;
+    padding-bottom: 30px;
+    user-select: none;
+    pointer-events: none;
+}
+
+.giga-logo {
+    width: 90%;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    position: relative;
+    top: auto;
+    left: auto;
+    z-index: -1;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transition: opacity 0.1s ease-out;
+}
+
+.giga-logo img {
+    width: 100%;
+    height: auto;
+    display: block;
+
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    visibility: visible;
+    opacity: 1;
+}
+
+.giga-logo.is-sticky {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.giga-logo.is-hidden-for-docking {
+    visibility: hidden;
+    opacity: 0;
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+}
+
+#dockedGigaLogo {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+#dockedGigaLogo.is-visible {
+    visibility: visible;
+    opacity: 1;
+}
+
+.logo-stop-container,
+.giga-logo-sticky-wrapper {
+    width: 100%;
+    position: relative;
+    margin: 10vh 0;
+}
+
+@media (max-width: 768px) {
+    .content-wrapper {
+        padding-top: 10vh;
+    }
+
+    .content {
+        width: 100%;
+        padding: 40px 20px;
+        border-radius: 0;
+    }
+
+    .giga-logo-sticky-wrapper {
+        width: 100%;
+    }
+
+    #dockedGigaLogo {
+        visibility: visible;
+        opacity: 1;
+    }
+}
+
+
+.s.fan-out {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    pointer-events: none;
+}
+
+.s.fan-out .tech-icon {
+    width: 64px;
+    height: 64px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.3);
+    transform-origin: center center;
+
+    border-radius: 16px;
+    box-shadow: black 0 0 16px;
+    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                opacity 0.5s ease-out;
+}
+
+
+hr {
+  border: none;
+  height: 4px;
+  background-color: var(--accent-color);
+  width: 35%;
+  margin: 20px 0;
+  border-radius: 2px;
+}
+
+
+#glitchCanvas,
+#glitchCanvas2 {
+    position: relative;
+    z-index: 1;
+}
+
+.person-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.glow-orb {
+    width: 0;
+    height: 0;
+    background-color: #7df9ff;
+    border-radius: 50%;
+
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%);
+    transform: translateY(-50%);
+
+    box-shadow:
+        0 0 60px 48px #3ba35e66,
+        0 0 120px 96px #499b6442;
+
+    animation: pulseAnimation 5s infinite ease-in-out;
+}
+
+@keyframes pulseAnimation {
+    0% {
+        transform: translateX(-50%) translateY(-50%) scale(0.95);
+        box-shadow:
+            0 0 60px 48px #3ba35e66,
+            0 0 120px 96px #499b6442;
+    }
+    50% {
+        transform: translateX(-50%) translateY(-50%) scale(1.05);
+        box-shadow:
+            0 0 100px 52px #3ba35e66,
+            0 0 200px 100px #499b6442;
+    }
+    100% {
+        transform: translateX(-50%) translateY(-50%) scale(0.95);
+        box-shadow:
+            0 0 60px 48px #3ba35e66,
+            0 0 120px 96px #499b6442;
+    }
+}
